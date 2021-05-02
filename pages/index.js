@@ -4,6 +4,7 @@ import styles from '../styles/Home.module.css';
 export default function Home() {
   const [term, setTerm] = useState('');
   const [searchedResult, setSearchedResult] = useState('');
+  const [error, setError] = useState(null);
 
   const items = [
     { name: 'apple' },
@@ -18,6 +19,9 @@ export default function Home() {
     e.preventDefault();
     setSearchedResult(term);
     setTerm('');
+    if (filteredItems.length === 0) {
+      setError('No items matching your search please be more specific');
+    }
   };
 
   const handleChange = e => {
@@ -35,14 +39,19 @@ export default function Home() {
           <a href='/'>LOGO</a>
         </div>
         <form role='search' className={styles.search} onSubmit={handleSubmit}>
+          <label htmlFor='search'>Search:</label>
           <input
+            title='search for food'
+            aria-label='Enter your search term'
             type='search'
             id='search'
             name='search'
             onChange={handleChange}
             value={term || ''}
             placeholder='search'
+            required
           />
+
           <button type='submit' onClick={handleSubmit}>
             Search
           </button>
@@ -58,6 +67,9 @@ export default function Home() {
       </header>
       <main className={styles.main}>
         <h3>Items</h3>
+        <span className='errMsg' role='status'>
+          {error}
+        </span>
         {filteredItems && (
           <ul>
             {filteredItems.map(item => (
