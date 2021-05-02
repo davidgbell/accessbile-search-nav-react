@@ -34,9 +34,9 @@ export default function Home() {
         <div>
           <a href='/'>LOGO</a>
         </div>
-        <form className={styles.search} onSubmit={handleSubmit}>
+        <form role='search' className={styles.search} onSubmit={handleSubmit}>
           <input
-            type='text'
+            type='search'
             id='search'
             name='search'
             onChange={handleChange}
